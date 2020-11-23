@@ -2,13 +2,15 @@ package com.generictoaster.lambdatest;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.generictoaster.lambdatest.data.Stats;
+import com.generictoaster.lambdatest.data.StatsInput;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.*;
 
-public class StatHandler {
+public class StatHandler implements RequestHandler<StatsInput, Stats> {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     /**
      * Fine the <a href="https://www.mathsisfun.com/mean.html">mean</a> of a list of integers
@@ -106,6 +108,9 @@ public class StatHandler {
      * So what if we WANT/NEED it to be fast??!! This method does just that, but it is UGLY! It also
      * breaks a couple of OO design principles, but sometimes we do that when we need it to be as fast as possible.
      *
+     * So, I have a problem, I love optimized code, so I wrote this because it bothered me that I have to loop through the numbers
+     * more than one time. But then I wrote it and boy is it ugly, like most "optimized" code :D
+     *
      * @param values list of numbers
      * @return - the mean, median and mode
      */
@@ -148,19 +153,13 @@ public class StatHandler {
             throw new IllegalArgumentException();
     }
 
-    /**
-     * Exposed function for aws lambda
-     *
-     * @param input
-     * @param context
-     * @return
-     */
-    public Stats handler(List<Integer> input, Context context) {
+    @Override
+    /* verfied in aws Lambda */
+    public Stats handleRequest(StatsInput input, Context context) {
         LambdaLogger logger = context.getLogger();
 
-        Stats returnVal = getAllStats(input);
+        Stats returnVal = getAllStats(input.getNumbers());
 
-        // process input
         logger.log("EVENT: " + gson.toJson(input));
         logger.log("RETURN: " + gson.toJson(returnVal));
 

@@ -141,6 +141,9 @@ public class StatHandlerTest {
         assertEquals(modes, mystats.getModes());
     }
 
+    /*
+    not my code, copy / paste from StackOverflow like a good programmer!
+     */
     private List<Integer> getModes(final List<Integer> numbers) {
         final Map<Integer, Long> countFrequencies = numbers.stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
