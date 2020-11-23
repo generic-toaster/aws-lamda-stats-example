@@ -13,7 +13,7 @@ import java.util.*;
 public class StatHandler implements RequestHandler<StatsInput, Stats> {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     /**
-     * Fine the <a href="https://www.mathsisfun.com/mean.html">mean</a> of a list of integers
+     * Find the <a href="https://www.mathsisfun.com/mean.html">mean</a> of a list of integers
      *
      * @param values list of intergers
      * @return the mean
@@ -33,7 +33,7 @@ public class StatHandler implements RequestHandler<StatsInput, Stats> {
     }
 
     /**
-     * Fine the <a href="https://www.mathsisfun.com/median.html">median</a> of a list of integers
+     * Find the <a href="https://www.mathsisfun.com/median.html">median</a> of a list of integers
      *
      * @param values list of integers
      * @return the median value
